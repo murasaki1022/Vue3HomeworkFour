@@ -1,9 +1,8 @@
 import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 
-let productModal = null;
-
 import pagination from "../components/pagination.js";
 import deleteProduct from "../components/deleteProduct.js";
+import productModal from "../components/productModal.js";
 
 createApp({
   data() {
@@ -48,15 +47,17 @@ createApp({
       if (status === "new") {
         this.tempProduct = {};
         this.isNew = true;
-        productModal.show();
+        // productModal.show();
+        this.$refs.pModal.openModal();
       } else if (status === "edit") {
         this.tempProduct = { ...item };
         this.isNew = false;
-        productModal.show();
+        // productModal.show();
+        this.$refs.pModal.openModal();
       } else if (status === "delete") {
         this.tempProduct = { ...item };
         // delProductModal.show();
-        this.$refs.removeModel.openModel();
+        this.$refs.removeModal.openModal();
       }
     },
     updateProduct() {
@@ -71,7 +72,8 @@ createApp({
       axios[http](url, { data: this.tempProduct })
         .then((response) => {
           alert(response.data.message);
-          productModal.hide();
+          // productModal.hide();
+          this.$refs.pModal.hideModal();
           this.getProductList();
         })
         .catch((error) => {
@@ -85,7 +87,7 @@ createApp({
         .delete(url)
         .then((response) => {
           alert(response.data.message);
-
+          this.$refs.removeModal.hideModal();
           this.getProductList();
         })
         .catch((error) => {
@@ -104,14 +106,6 @@ createApp({
     );
     axios.defaults.headers.common["Authorization"] = token;
     this.checkAdmin();
-
-    productModal = new bootstrap.Modal(
-      document.getElementById("productModal"),
-      {
-        keyboard: false,
-        backdrop: "static",
-      }
-    );
   },
-  components: { pagination, deleteProduct },
+  components: { pagination, deleteProduct, productModal },
 }).mount("#app");

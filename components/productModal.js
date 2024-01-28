@@ -1,4 +1,8 @@
 export default {
+  data() {
+    return { productModal: null };
+  },
+  props: ["tempProduct", "updateProduct"],
   template: `<div
   id="productModal"
   ref="productModal"
@@ -43,11 +47,11 @@ export default {
                 :key="key"
               >
                 <div class="mb-3">
-                  <label :for="`imagesUrl${key}`" class="form-label"
+                  <label :for="imagesUrl[key]" class="form-label"
                     >圖片網址{{key+1}}</label
                   >
                   <input
-                    :id="`imagesUrl${key}`"
+                    :id="imagesUrl[key]"
                     v-model="tempProduct.imagesUrl[key]"
                     type="text"
                     class="form-control"
@@ -204,4 +208,22 @@ export default {
     </div>
   </div>
 </div>`,
+  methods: {
+    openModal() {
+      this.productModal.show();
+    },
+    hideModal() {
+      this.productModal.hide();
+    },
+  },
+  mounted() {
+    this.productModal = new bootstrap.Modal(
+      this.$refs.productModal,
+      "productModal",
+      {
+        keyboard: false,
+        backdrop: "static",
+      }
+    );
+  },
 };

@@ -5,10 +5,10 @@ export default {
     };
   },
   methods: {
-    openModel() {
+    openModal() {
       this.delProductModal.show();
     },
-    hideModel() {
+    hideModal() {
       this.delProductModal.hide();
     },
   },
