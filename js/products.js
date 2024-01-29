@@ -45,12 +45,17 @@ createApp({
     },
     openModal(status, item) {
       if (status === "new") {
-        this.tempProduct = {};
+        this.tempProduct = {
+          imagesUrl: [],
+        };
         this.isNew = true;
         // productModal.show();
         this.$refs.pModal.openModal();
       } else if (status === "edit") {
         this.tempProduct = { ...item };
+        if (!Array.isArray(this.tempProduct.imagesUrl)) {
+          this.tempProduct.imagesUrl = [];
+        }
         this.isNew = false;
         // productModal.show();
         this.$refs.pModal.openModal();
@@ -93,10 +98,6 @@ createApp({
         .catch((error) => {
           alert(error.data.message);
         });
-    },
-    addImage() {
-      this.tempProduct.imagesUrl = [];
-      this.tempProduct.imagesUrl.push("");
     },
   },
   mounted() {

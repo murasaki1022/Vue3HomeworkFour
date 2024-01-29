@@ -20,7 +20,6 @@ export default {
   tabindex="-1"
   aria-labelledby="delProductModalLabel"
   aria-hidden="true"
-  ref="delProductModal"
 >
   <div class="modal-dialog">
     <div class="modal-content border-0">

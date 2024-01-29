@@ -2,7 +2,7 @@ export default {
   data() {
     return { productModal: null };
   },
-  props: ["tempProduct", "updateProduct"],
+  props: ["tempProduct", "updateProduct", "isNew"],
   template: `<div
   id="productModal"
   ref="productModal"
@@ -44,14 +44,14 @@ export default {
               <div
                 class="mb-1"
                 v-for="(image, key) in tempProduct.imagesUrl"
-                :key="key"
+                :key="key+456"
               >
                 <div class="mb-3">
-                  <label :for="imagesUrl[key]" class="form-label"
+                  <label :for="image[key]" class="form-label"
                     >圖片網址{{key+1}}</label
                   >
                   <input
-                    :id="imagesUrl[key]"
+                    :id="image[key]"
                     v-model="tempProduct.imagesUrl[key]"
                     type="text"
                     class="form-control"
@@ -79,24 +79,16 @@ export default {
                 </button>
               </div>
             </div>
-            <div v-else>
-              <button
-                class="btn btn-outline-primary btn-sm d-block w-100"
-                @click="addImage"
-              >
-                新增圖片
-              </button>
-            </div>
           </div>
           <div class="col-sm-8">
             <div class="mb-3">
               <label for="title" class="form-label">標題</label>
               <input
                 id="title"
+                v-model="tempProduct.title"
                 type="text"
                 class="form-control"
                 placeholder="請輸入標題"
-                v-model="tempProduct.title"
               />
             </div>
 
@@ -105,20 +97,20 @@ export default {
                 <label for="category" class="form-label">分類</label>
                 <input
                   id="category"
+                  v-model="tempProduct.category"
                   type="text"
                   class="form-control"
                   placeholder="請輸入分類"
-                  v-model="tempProduct.category"
                 />
               </div>
               <div class="mb-3 col-md-6">
-                <label for="price" class="form-label">單位</label>
+                <label for="unit" class="form-label">單位</label>
                 <input
                   id="unit"
+                  v-model="tempProduct.unit"
                   type="text"
                   class="form-control"
                   placeholder="請輸入單位"
-                  v-model="tempProduct.unit"
                 />
               </div>
             </div>
@@ -128,22 +120,22 @@ export default {
                 <label for="origin_price" class="form-label">原價</label>
                 <input
                   id="origin_price"
+                  v-model.number="tempProduct.origin_price"
                   type="number"
                   min="0"
                   class="form-control"
                   placeholder="請輸入原價"
-                  v-model.number="tempProduct.origin_price"
                 />
               </div>
               <div class="mb-3 col-md-6">
                 <label for="price" class="form-label">售價</label>
                 <input
                   id="price"
+                  v-model.number="tempProduct.price"
                   type="number"
                   min="0"
                   class="form-control"
                   placeholder="請輸入售價"
-                  v-model.number="tempProduct.price"
                 />
               </div>
             </div>
@@ -153,21 +145,21 @@ export default {
               <label for="description" class="form-label">產品描述</label>
               <textarea
                 id="description"
+                v-model="tempProduct.description"
                 type="text"
                 class="form-control"
                 placeholder="請輸入產品描述"
-                v-model="tempProduct.description"
               >
               </textarea>
             </div>
             <div class="mb-3">
               <label for="content" class="form-label">說明內容</label>
               <textarea
-                id="description"
+                id="content"
+                v-model="tempProduct.content"
                 type="text"
                 class="form-control"
                 placeholder="請輸入說明內容"
-                v-model="tempProduct.content"
               >
               </textarea>
             </div>
@@ -175,11 +167,11 @@ export default {
               <div class="form-check">
                 <input
                   id="is_enabled"
+                  v-model="tempProduct.is_enabled"
                   class="form-check-input"
                   type="checkbox"
                   :true-value="1"
                   :false-value="0"
-                  v-model="tempProduct.is_enabled"
                 />
                 <label class="form-check-label" for="is_enabled"
                   >是否啟用</label
